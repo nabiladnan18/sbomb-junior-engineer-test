@@ -1,8 +1,17 @@
+import csv
+import json
+
+
 def read_csv_file(file_path):
     """
     Read a CSV file and return its content as a list of dictionaries.
     """
-    return
+    with open(file_path) as f:
+        csv_data = csv.DictReader(f)
+        data = [line for line in csv_data]
+
+    return json.dumps(data)
+
 
 def get_unique_teams(data):
     """
