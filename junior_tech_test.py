@@ -55,7 +55,15 @@ def average_pass_length_by_team(data, team_name):
     """
     Calculate the average pass length for the provided team to 1 decimal place
     """
-    return
+
+    pass_lengths = [
+        float(event["pass_length"])
+        for event in filter_by_team(data, "Germany")
+        if event["event_type_name"] == "Pass"
+    ]
+
+    return round(mean(pass_lengths), 1)
+
 
 def filter_players_by_position(data, position_name):
     """
