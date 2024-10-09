@@ -18,7 +18,6 @@ def get_unique_teams(data):
     """
     Return a set of unique team names from the provided data.
     """
-    data = json.loads(data)
 
     return set(map(lambda y: y["team_name"], json.loads(data)))
 
@@ -37,7 +36,6 @@ def filter_by_team(data, team_name):
     """
     Filter the data by the provided team name and return the filtered data.
     """
-    data = json.loads(data)
 
     return [event for event in json.loads(data) if event["team_name"] == team_name]
 
