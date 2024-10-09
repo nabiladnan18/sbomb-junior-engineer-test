@@ -84,7 +84,15 @@ def count_successful_passes(data):
     """
     Count the number of successful passes (not considering pass outcome).
     """
-    return
+
+    successful_pass_events = [
+        event
+        for event in json.loads(data)
+        if event["event_type_name"] == "Pass" and event["outcome_name"] == ""
+    ]
+
+    return len(successful_pass_events)
+
 
 def filter_by_period(data, period):
     """
