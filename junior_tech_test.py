@@ -20,7 +20,7 @@ def get_unique_teams(data):
     Return a set of unique team names from the provided data.
     """
 
-    return set(map(lambda y: y["team_name"], json.loads(data)))
+    return set(map(lambda event: event["team_name"], json.loads(data)))
 
 
 def get_most_common_event_type(data):
