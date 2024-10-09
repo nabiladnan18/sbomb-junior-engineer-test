@@ -1,5 +1,6 @@
 import csv
 import json
+from collections import Counter
 
 
 def read_csv_file(file_path):
@@ -26,7 +27,13 @@ def get_most_common_event_type(data):
     """
     Return the most common event type name from the provided data.
     """
-    return
+    data = json.loads(data)
+
+    event_type_names = [item["event_type_name"] for item in data]
+    event_ranked_by_occurrence: list[tuple] = Counter(event_type_names).most_common()
+
+    return event_ranked_by_occurrence[0][0]
+
 
 def filter_by_team(data, team_name):
     """
