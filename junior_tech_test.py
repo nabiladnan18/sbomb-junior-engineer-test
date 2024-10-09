@@ -1,6 +1,7 @@
 import csv
 import json
 from collections import Counter
+from statistics import mean
 
 
 def read_csv_file(file_path):
@@ -58,7 +59,7 @@ def average_pass_length_by_team(data, team_name):
 
     pass_lengths = [
         float(event["pass_length"])
-        for event in filter_by_team(data, "Germany")
+        for event in filter_by_team(data, team_name)
         if event["event_type_name"] == "Pass"
     ]
 
