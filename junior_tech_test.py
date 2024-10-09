@@ -98,7 +98,9 @@ def filter_by_period(data, period):
     """
     Return a list of events that occurred in the provided period (e.g., 1 or 2).
     """
-    return
+
+    return [event for event in json.loads(data) if event["period"] == period]
+
 
 def count_shots_by_player(data, player_name):
     """
