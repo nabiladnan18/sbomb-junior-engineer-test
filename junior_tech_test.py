@@ -104,4 +104,11 @@ def count_shots_by_player(data, player_name):
     """
     Count the number of shots taken by the provided player.
     """
-    return
+
+    shot_events = set()
+    for event in data:
+        if event["event_type_name"] == "Shot" and event["player_name"] == player_name:
+            timestamp = event["timestamp"]
+            shot_events.add(timestamp)
+
+    return len(shot_events)
