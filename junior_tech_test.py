@@ -20,16 +20,14 @@ def get_unique_teams(data):
     """
     data = json.loads(data)
 
-    return set(map(lambda y: y["team_name"], data))
+    return set(map(lambda y: y["team_name"], json.loads(data)))
 
 
 def get_most_common_event_type(data):
     """
     Return the most common event type name from the provided data.
     """
-    data = json.loads(data)
-
-    event_type_names = [item["event_type_name"] for item in data]
+    event_type_names = [event["event_type_name"] for event in json.loads(data)]
     event_ranked_by_occurrence: list[tuple] = Counter(event_type_names).most_common()
 
     return event_ranked_by_occurrence[0][0]
@@ -41,7 +39,7 @@ def filter_by_team(data, team_name):
     """
     data = json.loads(data)
 
-    return [event for event in data if event["team_name"] == team_name]
+    return [event for event in json.loads(data) if event["team_name"] == team_name]
 
 
 def count_event_type_by_team(data, team_name, event_type_name):
