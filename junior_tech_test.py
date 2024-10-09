@@ -1,6 +1,5 @@
 import csv
-import json
-from collections import Counter, defaultdict
+from collections import Counter
 from statistics import mean
 
 
@@ -12,7 +11,7 @@ def read_csv_file(file_path):
         csv_data = csv.DictReader(f)
         data = [line for line in csv_data]
 
-    return json.dumps(data)
+    return data
 
 
 def get_unique_teams(data):
@@ -20,14 +19,14 @@ def get_unique_teams(data):
     Return a set of unique team names from the provided data.
     """
 
-    return set(map(lambda event: event["team_name"], json.loads(data)))
+    return set(map(lambda event: event["team_name"], data))
 
 
 def get_most_common_event_type(data):
     """
     Return the most common event type name from the provided data.
     """
-    event_type_names = [event["event_type_name"] for event in json.loads(data)]
+    event_type_names = [event["event_type_name"] for event in data]
     event_ranked_by_occurrence: list[tuple] = Counter(event_type_names).most_common()
 
     return event_ranked_by_occurrence[0][0]
@@ -38,7 +37,7 @@ def filter_by_team(data, team_name):
     Filter the data by the provided team name and return the filtered data.
     """
 
-    return [event for event in json.loads(data) if event["team_name"] == team_name]
+    return [event for event in data if event["team_name"] == team_name]
 
 
 def count_event_type_by_team(data, team_name, event_type_name):
@@ -71,13 +70,12 @@ def filter_players_by_position(data, position_name):
     Return a list of player names who play at the provided position.
     """
 
-    players = defaultdict(set)
-    for event in json.loads(data):
-        event: dict
-        position = event.get("player_position_name")
-        players[position].add(event["player_name"])
+    players = set()
+    for event in data:
+        if event["player_position_name"] == position_name:
+            players.add(event["player_name"])
 
-    return players[position_name]
+    return players
 
 
 def count_successful_passes(data):
@@ -87,7 +85,7 @@ def count_successful_passes(data):
 
     successful_pass_events = [
         event
-        for event in json.loads(data)
+        for event in data
         if event["event_type_name"] == "Pass" and event["outcome_name"] == ""
     ]
 
@@ -99,7 +97,7 @@ def filter_by_period(data, period):
     Return a list of events that occurred in the provided period (e.g., 1 or 2).
     """
 
-    return [event for event in json.loads(data) if event["period"] == period]
+    return [event for event in data if event["period"] == period]
 
 
 def count_shots_by_player(data, player_name):
