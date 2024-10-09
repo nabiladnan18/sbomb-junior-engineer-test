@@ -1,6 +1,6 @@
 import csv
 import json
-from collections import Counter
+from collections import Counter, defaultdict
 from statistics import mean
 
 
@@ -70,7 +70,15 @@ def filter_players_by_position(data, position_name):
     """
     Return a list of player names who play at the provided position.
     """
-    return
+
+    players = defaultdict(set)
+    for event in json.loads(data):
+        event: dict
+        position = event.get("player_position_name")
+        players[position].add(event["player_name"])
+
+    return players[position_name]
+
 
 def count_successful_passes(data):
     """
