@@ -39,7 +39,10 @@ def filter_by_team(data, team_name):
     """
     Filter the data by the provided team name and return the filtered data.
     """
-    return
+    data = json.loads(data)
+
+    return [event for event in data if event["team_name"] == team_name]
+
 
 def count_event_type_by_team(data, team_name, event_type_name):
     """
